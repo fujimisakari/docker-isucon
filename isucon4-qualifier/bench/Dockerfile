@@ -28,5 +28,6 @@ RUN \
   mv /tmp/benchmarker/benchmarker /home/isucon/ && \
   rm -rf /tmp/benchmarker isucon4
 
+RUN rm -rf /home/isucon/sql
 RUN rm /home/isucon/init.sh
 ADD ./init.sh /home/isucon
