@@ -1,0 +1,57 @@
+nginx:
+  container_name: "isu4_qualifier_nginx"
+  image: isu4_qualifier_nginx
+  ports:
+    - "80:80"
+  links:
+    - app:app
+  volumes:
+    - ./nginx:/var/log/nginx
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  volumes_from:
+    - app
+
+app:
+  container_name: "isu4_qualifier_go"
+  image: isu4_qualifier_go
+  restart: always
+  links:
+    - mysql:mysql
+    - redis:redis
+  volumes:
+    - ./webapp:/go/src/webapp
+  volumes_from:
+    - storage
+  command: ./run.sh
+
+mysql:
+  container_name: "isu4_qualifier_mysql"
+  image: mysql:5.6
+  restart: always
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    - TZ=Asia/Tokyo
+  volumes:
+    - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  volumes_from:
+    - storage
+  command: ["--max_allowed_packet=300M"]
+
+redis:
+  container_name: "isu4_qualifier_redis"
+  image: redis:latest
+  restart: always
+  ports:
+    - "6379:6379"
+  volumes_from:
+    - storage
+  command: redis-server --appendonly yes
+
+storage:
+  container_name: "isu4_qualifier_storage"
+  image: busybox:latest
+  volumes:
+    - /var/lib/mysql
+    - /data

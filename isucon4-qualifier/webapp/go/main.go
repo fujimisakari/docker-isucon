@@ -22,7 +22,7 @@ func init() {
 		"%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
 		getEnv("ISU4_DB_USER", "root"),
 		getEnv("ISU4_DB_PASSWORD", ""),
-		getEnv("ISU4_DB_HOST", "localhost"),
+		getEnv("ISU4_DB_HOST", "mysql"),
 		getEnv("ISU4_DB_PORT", "3306"),
 		getEnv("ISU4_DB_NAME", "isu4_qualifier"),
 	)

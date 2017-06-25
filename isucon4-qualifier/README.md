@@ -8,18 +8,19 @@ docker imageの生成
 $ docker build ./nginx -t isu4_qualifier_nginx
 $ docker build ./bench -t isu4_qualifier_bench
 $ docker build ./app-python -t isu4_qualifier_python
+$ docker build ./app-go -t isu4_qualifier_go
 ```
 
 ## アプリケーションの起動
 
 ```console
-$ ./docker-compose.sh python up
+$ ./docker-compose.sh [python|go] up
 ```
 
 ## スコアの確認
 
 ```console
-$ bench.sh
+$ ./bench.sh
 ```
 
 ## 参考
